@@ -25,6 +25,8 @@ public class Medico {
     @Embedded   //apesar da classe Endereco estar separada da de Medico, ambas fazem parte da mesma tabela no banco de dados
     private Endereco endereco;
 
+    private boolean ativo;
+
     public Medico(DadosCadastroMedico medico) {
         this.nome = medico.nome();
         this.email = medico.email();
@@ -32,6 +34,7 @@ public class Medico {
         this.crm = medico.crm();
         this.especialidade= medico.especialidade();
         this.endereco = new Endereco(medico.endereco());
+        this.ativo = true;
     }
 
     public void atualizarInformacoes(DadosAtualizacaoMedico dados) {
@@ -44,5 +47,9 @@ public class Medico {
         if(dados.endereco() != null){
             this.endereco.atualizarInformacoes(dados.endereco());
         }
+    }
+
+    public void excluir() {
+        this.ativo = false;
     }
 }
