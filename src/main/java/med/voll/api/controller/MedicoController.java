@@ -19,11 +19,11 @@ public class MedicoController {
 
     @PostMapping
     @Transactional
-    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroMedico dadosMedico, UriComponentsBuilder uriBuilder){ //O Spring exige, no método cadastrar, que seja passado, no cabeçalho da response, uma uri Location, que é a uri do registro que acabou de ser adicionado no banco. UriComponentsBuilder é uma classe do Spring que cria essa uri refernte ao registro que está sendo cadastrado, esse argumento não precisa ser passado no método GET, o Spring geral automaticamente (Ex.; em modo desenvolvimento, a uri é o http://localhost:8080 e ele muda automaticamente quando está em produção)
+    public ResponseEntity cadastrar(@RequestBody @Valid DadosCadastroMedico dadosMedico, UriComponentsBuilder uriBuilder){ //O Spring exige, no método cadastrar, que seja passado no cabeçalho da response uma uri Location, que é a uri do registro que acabou de ser adicionado no banco. UriComponentsBuilder é uma classe do Spring que cria essa uri, esse argumento não precisa ser passado no método GET, o Spring gera automaticamente (Ex.: em modo desenvolvimento, a uri é http://localhost:8080 e ele muda automaticamente quando está em produção)
       var medico = new Medico(dadosMedico);
       repository.save(medico);
 
-      var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri(); //adicionando esse path eu vou ter a uri completa do registro que acabou de ser adicionado no banco
+      var uri = uriBuilder.path("/medicos/{id}").buildAndExpand(medico.getId()).toUri(); //complementa a URI gerada anteriormente com o para gerar a uri completa do registro que acabou de ser adicionado no banco, essa uri é o endereço q eu posso acessar para ter os dados detalhados desse registro que acabou de ser adicionado (é um dos pilares para se construir uma API restful - HATEOAS)
       return ResponseEntity.created(uri).body(new DadosDetalhamentoMedico(medico));
     }
 
