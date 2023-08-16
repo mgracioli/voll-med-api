@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import javax.naming.AuthenticationException;
 import java.nio.file.AccessDeniedException;
 
-//RestControllerAdvice é uma classe específica para fazer tratamento de exceptions nas requisições
+//RestControllerAdvice é uma classe específica para fazer tratamento de exceptions
 @RestControllerAdvice
 public class TratadorErros {
     @ExceptionHandler(EntityNotFoundException.class)
