@@ -27,6 +27,7 @@ public class SecurityConfigurarions {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/login").permitAll() //se a requsição for de login, não valida se está autenticado
+                .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                 .anyRequest().authenticated()   //qualquer outra requisição, verifica se está autenticado
                 .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)  //informa para o Spring que o filtro q eu criei la em SecurityFilter tem que ser chamado antes desse filtro aqui do Spring
                 .build(); //desabilita a segurança contra csrf (como vamos usar tokens, o token já previne contra ataques csrf) e desabilita o processo de autenticação padrão que o spring security habilita (o formulario de login e senha que ele cria), STATELESS pq essa é uma API rest, STATEFUL seria se fosse uma aplicação Web que precisa guardar a sessão do usuário q está acessando para não precisar usar tokens
